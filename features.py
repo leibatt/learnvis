@@ -3,6 +3,9 @@ import datetime as dt #datetime.strptime(date_string, format)
 
 date_range_min = 5
 
+'''
+function used to organize what features are calculated
+'''
 def get_features_new(visdataobj,include=['a','g','p','s','c']):
     raw_data = visdataobj.raw_data
     features = []
@@ -112,6 +115,9 @@ def get_features_new(visdataobj,include=['a','g','p','s','c']):
     print "total features recorded:",len(features)
     return features
 
+'''
+old function used to call the feature functions we want to use
+'''
 def get_features(raw_data,indexes=[1,3,4]):
     features ={}
     densities = get_density(raw_data,index_list=indexes)
@@ -206,6 +212,9 @@ def overlapping_points_no_duplicates(raw_data,index_list=None):
             overlap[i] = o * 1.0 / len(ind) # scale according to length of column
     return {'all_overlaps':overlap,'max_overlap':max(overlap),'min_overlap':min(overlap)}
 
+'''
+checks if column is a string data type
+'''
 def is_dtype_string(col):
     returnval = str(col.dtype)[:2] == '|S'
     if not returnval:
@@ -216,6 +225,9 @@ def is_dtype_string(col):
             return False
     return True
 
+'''
+computes total unique strings per column (0 if num types)
+'''
 def get_unique_labels(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -242,6 +254,9 @@ def get_unique_labels(raw_data,index_list=None):
         avg_range = avg_range * 1.0 / num_str_cols
     return {'unique_labels':[total_range,first_range,avg_range], 'num_str_cols':num_str_cols}
 
+'''
+computes covariance and correlation
+'''
 def get_covariance_and_correlation_features(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -273,6 +288,9 @@ def get_covariance_and_correlation_features(raw_data,index_list=None):
     else:
         return {'covariance':[0,0,0,0],'correlation':[0,0,0,0]}
 
+'''
+checks if the data set has a date column
+'''
 def get_has_date(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -283,6 +301,9 @@ def get_has_date(raw_data,index_list=None):
     else:
         return 0.0
 
+'''
+returns total # columns
+'''
 def get_total_cols(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -290,6 +311,10 @@ def get_total_cols(raw_data,index_list=None):
 
     return len(index_list)
 
+'''
+computs skew, mean and standard deviation
+skew = value representing how far mean is from middle, or (max-min)/2+min
+'''
 def get_mean_skew_and_std(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -321,7 +346,7 @@ def get_mean_skew_and_std(raw_data,index_list=None):
                 c = (c - cmin) / cdiff # map to 0 - 1 range
                 #print "c:",c,",cdiff:",cdiff
                 m = np.mean(c) # between 0 and 1
-                s = np.std(c) # between 0 and 1?
+                s = np.std(c)
                 skew = 2 * np.absolute(.5 - m) # definitely between 0 and 1
             max_mean = max(max_mean,m)
             min_mean = min(min_mean,m)
@@ -339,6 +364,9 @@ def get_mean_skew_and_std(raw_data,index_list=None):
         'std':[max_std,min_std,1.0*avg_std/l],
         'skew':[max_skew,min_skew,1.0*avg_skew/l]}
 
+'''
+returns the fraction of cols that are numeric
+'''
 def get_fraction_num_cols(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -366,6 +394,10 @@ def get_density(raw_data,index_list=None):
     #print "size:",sizes[0],",",sizes[1]
     return [count/ sizes[0],count/sizes[1],count/sizes[2],count/sizes[3]]
     
+'''
+computes size of possible scidb arrays to store the data
+used to infer possible array densities
+'''
 def get_array_size(raw_data,index_list=None):
     numcols = len(raw_data)
     if index_list is None:
@@ -391,6 +423,9 @@ def get_array_size(raw_data,index_list=None):
     size_all_1 = size_all / last
     return [size_all,size_all_1,size_all_nums,size_strict]
 
+'''
+returns width of data range
+'''
 def get_range(col):
     if col.dtype == np.int64: # ints
         returnval = np.max(col) - np.min(col)
@@ -402,6 +437,9 @@ def get_range(col):
         returnval = np.unique(col).size
     return max(returnval,1)
 
+'''
+gets range from date
+'''
 def get_date_range(col):
     r = 1
     diff = np.max(col) - np.min(col)

@@ -92,7 +92,7 @@ def loadCSVColumns(filename,delim,header,quotechar):
 '''
 gets mapper data from a file, containing metadata
 about plot
-schema:
+mapping.txt schema:
 source,url,data file location, vis type label, [column type/purpose lable, column index, column name] 
 '''
 def loadMapper(filename,delim=default_delim,skip=default_skip,quotechar='"'):
