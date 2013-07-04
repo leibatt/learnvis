@@ -1,4 +1,4 @@
-class Feature:
+class BaseFeature:
   """
   Extract one
   """

@@ -7,26 +7,19 @@ def run_klass(klass, table):
   val = o.process(table)
   return (o.name, val)
 
-def list_klasses(ROOT, filter_func):
-  for dirpath, dirnames, fnames in os.walk(ROOT):
-    for fname in fnames:
-      try:
-        (f, path, desc) = imp.find_module(fname, dirpath)
-        with f:
-          module = imp.load_module("feature", file, path, desc)
-          members = inspect.getmembers(module)
-          classtuples = filter(lambda tup: inspect.isclass(tup[1]), members)
+def list_klasses(filter_func):
+  import features
+  from features import BaseFeature
+  members = inspect.getmembers(features)
+  classtuples = filter(lambda tup: inspect.isclass(tup[1]), members)
 
-          for (klassname, klass) in classtuples:
-            if filter_func(klass):
-              yield klass
-      except:
-        print "oi"
+  for (klassname, klass) in classtuples:
+    if klass == BaseFeature: continue
+    if filter_func is None or filter_func(klass):
+      yield klass
 
 
-
-
-def extract_features(ROOT, filter_func, table):
+def extract_features(filter_func, table):
   """
   Args
     ROOT: root directory containing feature definitions
@@ -35,11 +28,13 @@ def extract_features(ROOT, filter_func, table):
   """
   features = {}
 
-  for klass in list_klasses(ROOT, filter_func):
+  for klass in list_klasses(filter_func):
     (name, val) = run_klass(klass, table)
     features[name] = val
 
   return features
 
 
+if __name__ == "__main__":
 
+  print extract_features(None, [0,1,2,3])
