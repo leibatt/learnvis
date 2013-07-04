@@ -5,17 +5,20 @@ from fscore import Fscore
 def create_folds(points, K, shuffle = False):
   """
   Args:
-    points  - A list of input data elements
+    points  - A list of input data elements e.g., [x,x,x,...y,y,y]
     K       - Number of (training, testing) sets to generate
     shuffle - Whether to shuffle the data before generating folds.
 
   K-fold cross validation recipe from:
     http://code.activestate.com/recipes/521906-k-fold-cross-validation-partition/
+
+  XXX: scikitlearn has pretty good X-val function
+       http://scikit-learn.org/stable/modules/cross_validation.html
   """
 
   # TODO: make sure random seed is consistent across runs.
   if shuffle:
-    points = List(points)
+    points = list(points)
     random.shuffle(points)
 
   for k in xrange(K):
@@ -31,7 +34,7 @@ def train_and_test(points, K, shuffle):
     shuffle    -     whether to shuffle
   """
   fscore = Fscore()
-  i = 1 
+  i = 1
   for training, validation in create_folds(points, K, shuffle):
     model = Model()
     model.train(training)
