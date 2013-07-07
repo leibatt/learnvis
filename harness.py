@@ -1,11 +1,13 @@
 import random
 from model import Model
 from fscore import Fscore
+import datasets
+from datasets.base import BaseDataset
 
-def create_folds(points, K, shuffle = False):
+def create_folds(dataset, K, shuffle = False):
   """
   Args:
-    points  - A list of input data elements e.g., [x,x,x,...y,y,y]
+    dataset - A Dataset object (from the datasets/ package)
     K       - Number of (training, testing) sets to generate
     shuffle - Whether to shuffle the data before generating folds.
 
@@ -17,6 +19,8 @@ def create_folds(points, K, shuffle = False):
   """
 
   # TODO: make sure random seed is consistent across runs.
+  points = dataset.getVisualizations()
+
   if shuffle:
     points = list(points)
     random.shuffle(points)
@@ -26,16 +30,16 @@ def create_folds(points, K, shuffle = False):
     validation = [x for i, x in enumerate(points) if i % K == k]
     yield training, validation
 
-def train_and_test(points, K, shuffle):
+def train_and_test(dataset, K, shuffle):
   """
   Args:
-    points     -     An array of [x,y] pairs. e.g.: [[x,y], [x,y]]
+    points     -     A Dataset object
     K          -     how many folds for cross validation
     shuffle    -     whether to shuffle
   """
   fscore = Fscore()
   i = 1
-  for training, validation in create_folds(points, K, shuffle):
+  for training, validation in create_folds(dataset, K, shuffle):
     model = Model()
     model.train(training)
     thisFscore = model.evaluate(validation)
@@ -44,20 +48,7 @@ def train_and_test(points, K, shuffle):
     i += 1
   print "Overall performance: %s" % fscore.toString()
 
-
 if __name__ == '__main__':
-  X = [
-      [0, 0],
-      [0, 0],
-      [0, 0],
-      [0, 0],
-      [0, 0],
-      [0, 0],
-      [0, 0]
-      ]
-  train_and_test(X, 2, False)
-
-
-
-
+  dataset = BaseDataset()
+  train_and_test(dataset, 2, False)
 
