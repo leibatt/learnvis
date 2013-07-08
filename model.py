@@ -23,7 +23,7 @@ class Model:
   def train(self, visualizations):
     """
     Args:
-      points: an array of Visualization objects
+      visualizations: an array of Visualization objects
     Returns: 
       Nothing. Mutates the state of this model instance.
     """
@@ -57,10 +57,10 @@ class Model:
     for vis in visualizations:
       features = extract_features(self.filterFn, vis)
       xs.append(features)
-      yx.append(self.labelFn(vis))
+      ys.append(self.labelFn(vis))
 
     predicted = self.predict(xs)
-    fscore = MulticlassFscore()
+    mcf = MulticlassFscore()
 
     for x, gold, predicted in izip(xs, ys, predicted):
       mcf.registerResult(gold, predicted)
