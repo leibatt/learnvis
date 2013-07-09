@@ -4,8 +4,8 @@ import os
 
 def run_klass(klass, table):
   o = klass()
-  val = o.process(table)
-  return (o.name, val)
+  features = o.process(table)
+  return (o.name, features)
 
 def list_klasses(filter_func):
   import features
@@ -29,8 +29,9 @@ def extract_features(filter_func, table):
   features = {}
 
   for klass in list_klasses(filter_func):
-    (name, val) = run_klass(klass, table)
-    features[name] = val
+    (name, features) = run_klass(klass, table)
+    for key, val in features.iteritems():
+      features["%s__%s" % (name, key)] = val
 
   return features
 

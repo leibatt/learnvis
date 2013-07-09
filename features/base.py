@@ -14,8 +14,16 @@ class BaseFeature:
 
   def process(self, data):
     """
-    extract and return a feature value
+    produce an arbitrary dictionary of feature -> float
+    Return: 
+      None if nothing extracted/error, otherwise a dictiorary
     """
     None
+
+  def decode(self, feature_val):
+    """
+    Decode the encoded feature value into a human representable string
+    """
+    return str(feature_val)
 
 
