@@ -9,6 +9,7 @@ class RandomDataset(BaseDataset):
   def getVisualizations(self):
     self.xs = []
     self.ys = []
+    numrows = 10
     numsamples = 100
     visualizations = []
     for i in range(numrows):
