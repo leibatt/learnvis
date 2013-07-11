@@ -32,7 +32,7 @@ class Fscore:
     self.fp += fscore.fp
     self.fn += fscore.fn
 
-  def toString(self):
+  def __repr__(self):
     return "<FScore {tp: %d, fp: %d, tn: %d, fn: %d, p: %f, r: %f, f1: %r" % (
         self.tp, self.fp, self.tn, self.fn, self.precision(), self.recall(), self.f1());
 

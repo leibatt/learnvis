@@ -1,7 +1,9 @@
-from fscore import MulticlassFscore
+import numpy as np
 from sklearn import svm
-from feature_extractor import extract_features
+from sklearn.feature_extraction import DictVectorizer
 from itertools import izip
+
+from fscore import MulticlassFscore
 
 # Abstract-ish class to represent wrapping an instance of a learned model for incorporatin
 # into the training and testing harness. 
@@ -27,12 +29,15 @@ class Model:
     Returns: 
       Nothing. Mutates the state of this model instance.
     """
+    if not visualizations: return 
     x_train = []
     y_train = []
     for vis in visualizations:
-      features = extract_features(self.filterFn, vis)
-      x_train.append(features)
-      y_train.append(self.labelFn(vis))
+      x_train.append(vis.get_features())
+      y_train.append(vis.get_label())
+
+    x_train = np.asarray(x_train)
+    y_train = np.asarray(y_train)
     self.classifier.fit(x_train, y_train)
 
   def predict(self, visualizations):
@@ -42,8 +47,10 @@ class Model:
     Returns:
       the predicted y for visualization
     """
-    features = extract_features(self.filterFn, visualizations)
-    return self.classifier.predict(visualizations)
+    if len(visualizations) == 0: return []
+    features = [vis.get_features() for vis in visualizations]
+    features = np.asarray(features)
+    return self.classifier.predict(features)
 
   def evaluate(self, visualizations):
     """
@@ -52,16 +59,19 @@ class Model:
     Returns:
       an fscore object
     """
+    if len(visualizations) == 0: return None
+
     xs = []
     ys = []
     for vis in visualizations:
-      features = extract_features(self.filterFn, vis)
-      xs.append(features)
-      ys.append(self.labelFn(vis))
+      xs.append(vis.get_features())
+      ys.append(vis.get_label())
 
-    predicted = self.predict(xs)
+    predicted = self.predict(visualizations)
     mcf = MulticlassFscore()
 
+    xs = np.asarray(xs)
+    ys = np.asarray(ys)
     for x, gold, predicted in izip(xs, ys, predicted):
       mcf.registerResult(gold, predicted)
     mcf.finalize()

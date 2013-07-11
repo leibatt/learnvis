@@ -42,5 +42,5 @@ takes `vis.metadata` object as input and return f(x) e.g., "pie chart"
 
 #### harness:
 
-takes `(x axis features, y axis features, f(x))` as input and generates a model
+takes list of `(x axis features, y axis features, label)` as input and train/tests/returns a model
 
