@@ -19,3 +19,14 @@ http://scikit-learn.org/stable/modules/tree.html
 You just need the features in matrix form (I think numpy matrices are fine), and a separate 1 column
 matrix with the labels. I think mapper.py is the script I used. traverse.py looks like it may work
 too, but it's a bit older so I'm not sure.
+
+Each piece of data has four parts:
+- metadata file
+- data file in TSV
+- mapping file: for each row in that file there is one visualization
+- image of the visualization
+
+Visualization
+- 
+
+
