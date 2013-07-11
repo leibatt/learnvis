@@ -66,7 +66,7 @@ class MulticlassFscore:
       for label1 in self.labels:
         for label2 in self.labels:
           if label1 != label2:
-            label2.tn += label1.tp
+            self.labels[label2].tn += self.labels[label1].tp
 
   def ingest(self, other):
     if not self.finalized:
@@ -83,9 +83,9 @@ class MulticlassFscore:
       else:
         self.labels[label] = otherFscore
 
-  def toString(self):
-    ret = ""
+  def __repr__(self):
+    ret = [] 
     for label in self.labels:
-      ret = ret + label + ": " + self.labels[label].toString() + "\n"
-    return ret
+      ret.append("%s:%s" % (label, repr(self.labels[label])))
+    return "\n".join(ret)
 

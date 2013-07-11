@@ -74,5 +74,6 @@ class Model:
     ys = np.asarray(ys)
     for x, gold, predicted in izip(xs, ys, predicted):
       mcf.registerResult(gold, predicted)
+      print (gold, predicted)
     mcf.finalize()
     return mcf

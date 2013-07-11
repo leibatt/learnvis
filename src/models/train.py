@@ -1,6 +1,6 @@
 import random
 from model import Model
-from fscore import Fscore
+from fscore import MulticlassFscore
 from data import *
 
 
@@ -51,7 +51,7 @@ class ModelTrainer:
       K       -     how many folds for cross validation
       shuffle -     whether to shuffle
     """
-    fscore = Fscore()
+    fscore = MulticlassFscore()
     if K > 1:
       folds = self.create_folds(dataset, K, shuffle)
     else:
@@ -71,6 +71,8 @@ class ModelTrainer:
 
 if __name__ == '__main__':
   trainer = ModelTrainer(Model)
-  data = ModelData([{'a':0}, {'a': 1}, {'a':0}, {'a':1}], [0, 1, 0, 1])
-  trainer.train_and_test(data, 1, False)
+  ys = ([0]*10) + ([1]*10)
+  xs = [{'a': y} for y in ys]
+  data = ModelData(xs, ys)
+  trainer.train_and_test(data, 2, True)
 
