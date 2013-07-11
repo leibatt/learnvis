@@ -25,6 +25,8 @@ for the future.  can ignore now
 
 
 #### VizObject: contains data for the many-eyes stuff
+the data will be stored in a numpy structured array:
+http://docs.scipy.org/doc/numpy/user/basics.rec.html
 
 * **vis.data**: relational data in numpy array. Should also include column labels
 * **vis.features**: f(x) e.g., "pie chart"
