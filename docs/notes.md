@@ -26,7 +26,7 @@ for the future.  can ignore now
 
 #### VizObject: contains data for the many-eyes stuff
 
-* **vis.data**: relational data in numpy array.  
+* **vis.data**: relational data in numpy array. Should also include column labels
 * **vis.features**: f(x) e.g., "pie chart"
 * **vis.metadata**: metadata.txt encoded 
 
