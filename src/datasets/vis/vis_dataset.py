@@ -1,10 +1,9 @@
 import os
-from vis import Vis
-from base import BaseDataset
+from datasets.base import BaseDataset
+from vis_obj import Vis
 from vis_metadata import VisMetadata
 import csv
 import numpy as np
-from itertools import izip
 
 default_delim = '\t'
 default_quote = '"'
@@ -62,7 +61,8 @@ def loadMapper(filename,delim,quotechar):
     source = row.pop(0) # index 0
     url = row.pop(0) # index 1
     location = row.pop(0) # index 2
-    location = os.path.join("/Users/sirrice/mitnotes/research/misc/learnvis/data/data_sets/many_eyes", location)
+    head,tail = os.path.split(filename)
+    location = os.path.join(head, location)
     label = row.pop(0) # index 3
     delim = ','
     if location[len(location)-4:] == '.tsv' or location[len(location)-8:] == 'data.txt':
