@@ -89,3 +89,4 @@ class MulticlassFscore:
       ret.append("%s:%s" % (label, repr(self.labels[label])))
     return "\n".join(ret)
 
+
