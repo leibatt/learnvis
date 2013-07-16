@@ -3,17 +3,13 @@ class BaseDataset:
   Base
   """
 
-  def __init__(self, name=""):
-    """
-    Args
-      name: name of this (set) of features
-    """
-    self.name = name
+  def __init__(self):
+    self.visualizations = []
 
-  def getVisualizaations(self):
+  def getVisualizations(self):
     """
     return an array of visualization objects
     """
-    None
+    return self.visualizations
 
 
