@@ -1,9 +1,9 @@
 class Fscore:
   def __init__(self):
-    self.tp = 0
-    self.fp = 0
-    self.tn = 0
-    self.fn = 0
+    self.tp = 0.0
+    self.fp = 0.0
+    self.tn = 0.0
+    self.fn = 0.0
 
   def precision(self):
     denom = self.tp + self.fp
@@ -33,7 +33,7 @@ class Fscore:
     self.fn += fscore.fn
 
   def __repr__(self):
-    return "<FScore {tp: %d, fp: %d, tn: %d, fn: %d, p: %f, r: %f, f1: %r" % (
+    return "<FScore {tp: %d, fp: %d, tn: %d, fn: %d, p: %.2f, r: %.2f, f1: %.2f>" % (
         self.tp, self.fp, self.tn, self.fn, self.precision(), self.recall(), self.f1());
 
 class MulticlassFscore:
