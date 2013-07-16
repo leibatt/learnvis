@@ -43,4 +43,3 @@ class ColumnStats(BaseFeature):
         total += 1
     percent = (100.0 * notnull) / total
     return int(percent)
-
