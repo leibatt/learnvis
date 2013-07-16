@@ -1,3 +1,4 @@
+#7/9/2013
 
 ## Architecture
 
@@ -45,4 +46,15 @@ takes `vis.metadata` object as input and return f(x) e.g., "pie chart"
 #### harness:
 
 takes list of `(x axis features, y axis features, label)` as input and train/tests/returns a model
+
+#7/16/2013
+
+Harness is working!
+
+To Dos:
+
+   * Eugene will cc Leilani on Jeff Heer Revision email convo
+   * Ted will get Exhibit data loading into the harness
+   * Leilani will make her data parsing code easier to use and modularized
+   * Leilani will follow up on many eyes scripting info to get more visualizations
 
