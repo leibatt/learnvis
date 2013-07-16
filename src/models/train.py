@@ -5,6 +5,10 @@ from data import *
 
 
 class ModelTrainer:
+  """
+  Train and evaluate a model using X-validation
+
+  """
 
   def __init__(self, models):
     self.models = models

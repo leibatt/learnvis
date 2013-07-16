@@ -8,7 +8,7 @@ def run_klass(klass, table):
   return (o.name, features)
 
 def list_klasses(filter_func):
-  import features
+  import features.column as features
   from features import BaseFeature
   members = inspect.getmembers(features)
   classtuples = filter(lambda tup: inspect.isclass(tup[1]), members)
@@ -22,18 +22,19 @@ def list_klasses(filter_func):
 def extract_features(filter_func, table):
   """
   Args
-    ROOT: root directory containing feature definitions
     filter_func: function to filter feature objects
-    table is in some (currently unspecified format)
+    table:       a structured numpy array containing the data
   """
-  features = {}
+  ret = {}
 
   for klass in list_klasses(filter_func):
     (name, features) = run_klass(klass, table)
+    if not features: continue
     for key, val in features.iteritems():
-      features["%s__%s" % (name, key)] = val
+      ret["%s__%s" % (name, key)] = val
 
-  return features
+  print ret 
+  return ret
 
 
 if __name__ == "__main__":

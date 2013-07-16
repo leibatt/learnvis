@@ -1,3 +1,7 @@
+"""
+These classes are for transforming the dictionary feature-value objects from
+the feature extraction into the right format to ingest into the models
+"""
 from itertools import izip
 from sklearn.feature_extraction import DictVectorizer
 

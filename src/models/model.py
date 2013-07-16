@@ -5,10 +5,12 @@ from itertools import izip
 
 from fscore import MulticlassFscore
 
-# Abstract-ish class to represent wrapping an instance of a learned model for incorporatin
-# into the training and testing harness. 
 
 class Model:
+  """
+  Abstract-ish class to represent wrapping an instance of a learned model for incorporatin
+  into the training and testing harness. 
+  """
   def __init__(self, classifier = None, labelFn = None, filterFn = None):
     if labelFn is None:
       self.labelFn = lambda x: 1
