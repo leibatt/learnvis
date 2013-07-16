@@ -42,6 +42,7 @@ def run(fname):
   modelData = ModelData(features, labels)
   trainer = ModelTrainer(Model)
   for modelKlass, score in trainer.train_and_test(modelData):
+    print "\n"
     print modelKlass
     print score
     print "\n"
