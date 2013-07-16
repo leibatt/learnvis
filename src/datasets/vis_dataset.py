@@ -1,3 +1,4 @@
+import os
 from vis import Vis
 from base import BaseDataset
 from vis_metadata import VisMetadata
@@ -61,6 +62,7 @@ def loadMapper(filename,delim,quotechar):
     source = row.pop(0) # index 0
     url = row.pop(0) # index 1
     location = row.pop(0) # index 2
+    location = os.path.join("/Users/sirrice/mitnotes/research/misc/learnvis/data/data_sets/many_eyes", location)
     label = row.pop(0) # index 3
     delim = ','
     if location[len(location)-4:] == '.tsv' or location[len(location)-8:] == 'data.txt':
@@ -69,6 +71,7 @@ def loadMapper(filename,delim,quotechar):
     raw_data = loadCSVRows(location,delim=delim,quotechar='"',usetuples=True)
     if len(raw_data) <= 1: # don't add this if there's nothing in it
       continue
+
 
     msl = str(max_str_len(raw_data))
     column_names = raw_data[0]
