@@ -7,7 +7,7 @@ class Vis:
   '''
 
   def __init__(self,data,metadata=None,features=None):
-    self.data = data
+    self.data = data # A numpy structured array. All fields of string type.
     self.metadata = VisMetadata()
     self.features = None
     if metadata is not None:

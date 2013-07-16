@@ -1,6 +1,6 @@
 class Fscore:
   def __init__(self):
-    self.tp = 0;
+    self.tp = 0
     self.fp = 0
     self.tn = 0
     self.fn = 0
@@ -88,4 +88,5 @@ class MulticlassFscore:
     for label in self.labels:
       ret.append("%s:%s" % (label, repr(self.labels[label])))
     return "\n".join(ret)
+
 

@@ -36,7 +36,6 @@ def extract_features(filter_func, table):
   print ret 
   return ret
 
-
 if __name__ == "__main__":
 
   print extract_features(None, [0,1,2,3])
