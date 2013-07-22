@@ -31,4 +31,14 @@ class VisMetadata:
       self.url = url
 
   def __repr__(self):
-    return "VisMetadata(vistype: %s,axes: %s,scaling: %s,color: %s, url: %s)" % (self.vistype,self.axes,self.scaling,self.color,self.url)
+    vals = []
+    if self.vistype is not None:
+      vals.append("vistype: %s" % (self.vistype))
+    if self.scaling is not None:
+      vals.append("scaling: %s" % (self.scaling))
+    if self.color is not None:
+      vals.append("color: %s" % (self.color))
+    if self.url is not None:
+      vals.append("url: %s" % (self.color))
+
+    return "VisMetadata("+','.join(vals)+")"

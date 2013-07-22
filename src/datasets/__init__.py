@@ -1,2 +1,2 @@
-from datasets.base import *
 from datasets.vis import *
+from datasets.extractors import *

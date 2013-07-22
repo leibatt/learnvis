@@ -1,3 +1,7 @@
+#ignore datasets
+/data/data_sets
+/data/manyeyes*
+
 *.py[cod]
 
 # C extensions

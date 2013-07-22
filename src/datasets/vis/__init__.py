@@ -1,3 +1,3 @@
-from vis_obj import *
-from vis_metadata import *
-from vis_dataset import *
+from datasets.vis.vis_obj import *
+from datasets.vis.vis_metadata import *
+from datasets.vis.vis_dataset import *
