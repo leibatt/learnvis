@@ -17,8 +17,12 @@ Looking at many eyes visualizations
 * title may specify which columns are "interesting"
 * map plot of (states, number) -> scatter plot
 * need a "hirearchical" test 
-* exhibit data importer done. needs testing. Note: you need to 
-  easy_install thrift for this to work.
+* exhibit data importer done. needs testing. 
+  * you need to easy_install thrift for this to work
+  * right now it whitelists only maps(latlng) and timelines(start, end), since the other vis types are too complicated for us at the moment
+  * it is SLOWWWWWW. partly because thrift isn't that fast. partly because it's a lot of data  that has to be changed from graph form to table form
+  * one problem is that a lot of these datasets are hierarchical or graphical, rather than tabular, but I'm crushing them into tabular form. unsure if this is going to cause a problem with us learning bad weights for features as a result. (e.g., this will impact the number of NULLs.)
+
 
 #7/16/2013
 
