@@ -7,6 +7,7 @@ To Dos:
 
    * Eugene will cc Leilani on Jeff Heer Revision email convo
    * Ted will get Exhibit data loading into the harness
+     * Note: you will need to easy_install thrift for this to work
    * Leilani will make her data parsing code easier to use and modularized
    * Leilani will follow up on many eyes scripting info to get more visualizations
 
