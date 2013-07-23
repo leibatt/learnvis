@@ -5,7 +5,7 @@ To Dos:
 * Eugene: Simple transformation script to detect if tables need to be 
   folded/unfolded
 * Leilani: Filter data to those that have headers and rank them
-* Ted: Get the Exhibit data
+* Ted: Run a test with exihibit to make sure data import is returning everything in the right shape
 * All: Need instructions on how to code the data sets
 
 Looking at many eyes visualizations
@@ -17,7 +17,8 @@ Looking at many eyes visualizations
 * title may specify which columns are "interesting"
 * map plot of (states, number) -> scatter plot
 * need a "hirearchical" test 
-
+* exhibit data importer done. needs testing. Note: you need to 
+  easy_install thrift for this to work.
 
 #7/16/2013
 
