@@ -23,7 +23,7 @@ class ManyEyesExtractor(BaseExtractor):
     BaseExtractor.__init__(self)
 
   #def extract(self,dirname,delim=default_delim,quotechar=default_quote):
-  def extract(self,ops):
+  def extract(self, ops):
     '''
       Required inputs:
       dirname: full path to directory containing many eyes data
@@ -102,15 +102,14 @@ class ManyEyesExtractor(BaseExtractor):
       vis = Vis(data=arr)
       vis.metadata.vistype = l
 
-      #print vis
-      vis_map.append(vis)
+      yield vis
       if hh:
         total_headers += 1
       total_parsed += 1
+
       #print "total headers:",total_headers,", total files parsed:",total_parsed, "uid:",uid
     print "successfully parsed %r out of %r files found" % (total_parsed,total_files)
     print "%r headers found" % (total_headers)
     print "labels: %r" % (labels)
-    return vis_map
 
 

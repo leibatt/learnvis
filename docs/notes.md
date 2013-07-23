@@ -1,3 +1,23 @@
+# 7/23/2013
+
+To Dos:
+
+* Eugene: Simple transformation script to detect if tables need to be 
+  folded/unfolded
+* Leilani: Filter data to those that have headers and rank them
+* Ted: Get the Exhibit data
+* All: Need instructions on how to code the data sets
+
+Looking at many eyes visualizations
+
+* line graphs may be rendering multiple columns rather than grouping a single column
+* bar chart where instead of group on color, each sub-bar is a separate column
+* data can be transposed -- 0005adc4-2f18-11e0-8962-000255111976
+* May render multiple groups/columns, but only care(pick as default) a subset.
+* title may specify which columns are "interesting"
+* map plot of (states, number) -> scatter plot
+* need a "hirearchical" test 
+
 
 #7/16/2013
 

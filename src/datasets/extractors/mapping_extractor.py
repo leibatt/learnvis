@@ -106,7 +106,7 @@ class MappingExtractor(BaseExtractor):
       if len(indexes['c']) > 0:
         vis.metadata.color = indexes['c'][0]
 
-      vis_map.append(vis)
+      yield vis
+
     print "successfuly loaded %d files" % (len(vis_map))
-    return vis_map
 
