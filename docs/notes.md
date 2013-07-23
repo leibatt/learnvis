@@ -8,7 +8,16 @@ To Dos:
 * Ted: Run a test with exihibit to make sure data import is returning everything in the right shape
 * All: Need instructions on how to code the data sets
 
-Looking at many eyes visualizations
+Meeting summary
+
+* Decomposed problem into data-cleaning/formatting --> model-learning
+* data-cleaning is a separate task that we should hand perform, but both are necessary for learnvis to be useful
+* Looked at a number of many-eyes visualizations that Joshua scraped for us, considered strategies for
+  * hand labeling datasets
+  * how to code the data while labeling
+  * interfaces to make labeling fast (e.g., show the vis, sample of the dataset, and a simple form)
+
+Some observations while looking at many eyes visualizations in datasets/manyeyes_crawler/
 
 * line graphs may be rendering multiple columns rather than grouping a single column
 * bar chart where instead of group on color, each sub-bar is a separate column
