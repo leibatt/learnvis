@@ -19,12 +19,13 @@ class VisDataset():
       extractor_ops: dictionary of inputs to extractor.
     '''
     self.visualizations = []
-    self.extractor = extractor()
-    self.visualizations = self.extractor.extract(extractor_ops)
+    self.extractorKlass = extractor
+    self.extractor_ops = extractor_ops
 
   def __repr__(self):
     '''
     prints the stored list of visualization objects
+    needs to read through the dataset again...
     '''
     s = "["
     for i,vis in enumerate(self.visualizations):
@@ -33,13 +34,13 @@ class VisDataset():
     s += "]"
     return s
 
+
   def getVisualizations(self):
     '''
     returns the list of visualizations retreived from the mapping file 
     '''
-    return self.visualizations
-
-  def reload(self,extractor_ops):
-    self.visualizations = self.extractor.extract(extractor_ops)
-
+    extractor = self.extractorKlass()
+    return extractor.extract(self.extractor_ops)
+  
+  visualization = property(getVisualizations)
 
