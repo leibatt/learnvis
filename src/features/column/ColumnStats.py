@@ -1,5 +1,4 @@
-from .. import base
-from base import BaseFeature
+from ..base import BaseFeature
 from sets import Set
 import numpy as np
 
@@ -9,15 +8,20 @@ class ColumnStats(BaseFeature):
     BaseFeature.__init__(self, "column stats", "numeric")
   
   def process(self, data):
-    stddev = np.std(data)
     numdistinct = len(Set(data))
     
     return {
-      'StdDev': stddev,
+      'StdDev': self.standardDev(data),
       'Range': numdistinct,
       'PercentNumeric': self.percentNumeric(data),
       'PercentNotNull': self.percentNotNull(data)
     }
+
+  def standardDev(self, data):
+    try:
+      return np.std(map(float, data))
+    except ValueError:
+      return None
 
   def percentNumeric(self, data):
     numeric = 0
@@ -36,7 +40,7 @@ class ColumnStats(BaseFeature):
     notnull = 0
     total = 0
     for x in data:
-      if x is not None:
+      if x.strip() != "":
         notnull += 1
         total += 1
       else:

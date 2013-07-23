@@ -1,0 +1,98 @@
+import csv
+import numpy as np
+
+default_delim = '\t'
+default_quote = '"'
+
+class BaseExtractor():
+  def __init__(self):
+    self.default_delim = '\t'
+    self.default_quote = '"'
+
+  def loadCSVRows(self,filename,delim,quotechar,usetuples=False,
+                  check_row_widths=False,ignore_bad_rows=True):
+    '''
+    Parses delimiter-separated files and produces list of lists
+    Args
+      filename: name of file to retrieve data from
+      delim: delimiter of file
+      quotechar: character used to quote data
+      usetuples: whether to store each row as tuples or lists
+    Returns:
+      list of lists containing data from file
+    '''
+
+    rowtype = list
+    if usetuples:
+      rowtype = tuple
+    data = []
+    row_widths = -1
+    try:
+      with open(filename,'rb') as csvfile:
+        filereader = csv.reader(csvfile,delimiter=delim,quotechar=quotechar)
+        if check_row_widths:
+          for row in filereader:
+            if len(row) == 0: # don't add empty lines to the data set
+              continue
+            elif row_widths == -1:
+              row_widths = len(row) # this is what we'll use to match rows
+            elif len(row) != row_widths: # not all rows match
+              if ignore_bad_rows: # if ignoring bad rows, just omit
+                continue
+              else:
+                data = [] # reset data
+                break
+            data.append(rowtype(row))
+        else:
+          for row in filereader: # just take whatever's in the row
+            #print "row:",row
+            data.append(rowtype(row))
+    except Exception as e:
+      print "something bad happened. aborting load of file '%s'" % (filename)
+      print e
+      pass
+    return data
+
+  def max_str_len_across_rows(self,data):
+    '''
+    Args
+      data: assumed to be a list of lists or list of tuples
+    '''
+    returnval = max(max_str_len(item) for item in (row for row in data))
+    return returnval
+
+  def max_str_len(self,row)
+    returnval = len(max(item,key=len)) for item in row
+    return returnval
+
+  def numpy_str_array(self,raw_data):
+    '''
+    turns output from loadCSVRows into a numpy structured array of strings
+    '''
+    data = None
+    # assumes first column is column_labels
+    column_names = raw_data[0]
+    # remove column names from data
+    raw_data = raw_data[1:]
+    # get length of longest string in the data
+    msl = str(self.max_str_len(raw_data))
+    if msl == 0:
+      return None
+
+    # get the number of columns in the data
+    numcols = len(column_names)
+    # create a dtype string for the numpy array
+    dt = []
+    for i,f in enumerate(column_names):
+      dt.append('S'+msl)
+    dt.append('') # trailing ',' required for data with only 1 column
+    print "dt:",dt,",format:",(','.join(dt))
+    data = np.array(raw_data,dtype=','.join(dt)) # create structured array of strings
+    # add the proper column names for the data
+    try:
+      data.dtype.names = tuple(column_names)
+    except:
+      data = None
+    return data
+
+

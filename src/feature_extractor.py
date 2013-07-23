@@ -15,6 +15,7 @@ def list_klasses(filter_func):
 
   for (klassname, klass) in classtuples:
     if klass == BaseFeature: continue
+    if not issubclass(klass, BaseFeature): continue
     if filter_func is None or filter_func(klass):
       yield klass
 
@@ -31,7 +32,8 @@ def extract_features(filter_func, table):
     (name, features) = run_klass(klass, table)
     if not features: continue
     for key, val in features.iteritems():
-      ret["%s__%s" % (name, key)] = val
+      if val is not None:
+        ret["%s__%s" % (name, key)] = val
 
   print ret 
   return ret

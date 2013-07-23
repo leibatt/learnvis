@@ -1,4 +1,19 @@
 
+#7/16/2013
+
+Harness is working!
+
+To Dos:
+
+   * Eugene will cc Leilani on Jeff Heer Revision email convo
+   * Ted will get Exhibit data loading into the harness
+   * Leilani will make her data parsing code easier to use and modularized
+   * Leilani will follow up on many eyes scripting info to get more visualizations
+
+
+
+#7/9/2013
+
 ## Architecture
 
 The overall data flow is:
@@ -28,9 +43,22 @@ for the future.  can ignore now
 the data will be stored in a numpy structured array:
 http://docs.scipy.org/doc/numpy/user/basics.rec.html
 
-* **vis.data**: relational data in numpy array. Should also include column labels
-* **vis.features**: f(x) e.g., "pie chart"
-* **vis.metadata**: metadata.txt encoded 
+**vis.data**
+
+Relational data in structured numpy array.  
+
+```
+vis.data.dtype.names # column names
+vis.data[COLNAME]    # column of data
+```
+
+**vis.features**
+
+f(x) e.g., "pie chart"
+
+**vis.metadata**
+
+metadata.txt encoded 
 
 #### compute_features:
 
@@ -45,4 +73,3 @@ takes `vis.metadata` object as input and return f(x) e.g., "pie chart"
 #### harness:
 
 takes list of `(x axis features, y axis features, label)` as input and train/tests/returns a model
-
