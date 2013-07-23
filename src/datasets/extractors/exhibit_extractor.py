@@ -18,8 +18,14 @@ class ExhibitExtractor(BaseExtractor):
 
   def extract(self, filepattern):
     """
+    Extracts exhibit visualizations for the provided filepattern.
+
+    TODO: Should this be returning them instead of yielding them?
+
     Args:
       filepattern: file pattern for glob of files
+    Yields:
+      Vis objects.
     """
     for i in glob.glob(filepattern):
       f = open(i)
@@ -43,10 +49,12 @@ class ExhibitExtractor(BaseExtractor):
 
   def extractVisualizations(self, exhibit):
     """
+    Extracts one visualization object for each view in an Exhibit.
+
     Args:
       exhibit: an exhibit thrift object
     Returns:
-      a Vis object
+      an array of Vis objects
     """
     ret = []
 
@@ -82,6 +90,20 @@ class ExhibitExtractor(BaseExtractor):
     return ret
 
   def extractData(self, exhibit):
+    """
+    Extracts the dataset used in an Exhibit visualization.
+
+    Warning: Exhibit stores data as an RDF graph, and analysis of the
+    particular dataset shows that many people use this to express
+    graphical and hierarchical data, yet this method forces the entire
+    graph into a single table.
+
+    Args:
+      exhibit: A thrift object
+    Returns:
+      The dataset expressed as a single Numpy structured array.
+    """
+
     properties = {}
     subjects = {}
 
@@ -122,6 +144,15 @@ class ExhibitExtractor(BaseExtractor):
     return data
 
   def dictToTuple(self, item, data):
+    """
+    Converts an entity's representation from a dict to a table row (tuple).
+
+    Args:
+      item: An dict of Property -> Object for a given Subject
+      data: a numpy structured array (for column index lookup)
+    Returns:
+      A tuple suitable for insertion into the data object
+    """
     row = [''] * len(data.dtype.names)
     for p in item:
       i = self.fieldIndex(p, data)
@@ -129,6 +160,15 @@ class ExhibitExtractor(BaseExtractor):
     return tuple(row)
 
   def fetchAxes(self, view, data):
+    """
+    Fetches the axes (indices) involved in a particular view.
+
+    Args:
+      view: A thrift view object
+      data: A numpy structured array for column index lookup
+    Returns:
+      An array of indices of the data columns participating in this view
+    """
     labels = []
     if view.kind == 'map':
       if 'latlng' in view.htmlProps:
@@ -152,6 +192,15 @@ class ExhibitExtractor(BaseExtractor):
           indices.append(index)
 
   def fieldIndex(self, label, data):
+    """
+    Converts a property name into a field index.
+
+    Args:
+      label: The name of a field
+      data: A numpy structured array for column index lookup
+    Returns:
+      The index of the column, if found, or -1
+    """
     for i, name in enumerate(data.dtype.names):
       if label == name:
         return i
