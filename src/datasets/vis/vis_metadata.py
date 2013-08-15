@@ -14,11 +14,11 @@ class VisMetadata:
       color: int -> index of column used to apply colors
       url: string representing url for the original visualization
     '''
-    self.vistype = None
-    self.axes = None
-    self.scaling = None
-    self.color = None
-    self.url = None
+    self.vistype = ''
+    self.axes = []
+    self.scaling = -1
+    self.color = -1
+    self.url = ''
     if vistype is not None:
       self.vistype = vistype
     if axes is not None:

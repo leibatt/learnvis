@@ -60,7 +60,8 @@ if __name__ == '__main__':
   sys.path.append(os.path.normpath(os.path.join(datasets_dir, '..', '..')))
   from datasets import ManyEyesExtractor,VisDataset,Vis,VisMetadata
 
-  run("../data/data_sets/many_eyes/mapping.txt")
+  #run("../data/data_sets/many_eyes/mapping.txt")
+  run("../data/manyeyes_test")
 
 
 else:
