@@ -2,7 +2,10 @@ import random
 from models import *
 from datasets import *
 from feature_extractor import extract_features
-
+import time
+import logging
+import datetime
+import os
 
 def load_data(fname):
   #exops = {"filename": fname}
@@ -36,9 +39,17 @@ def compute_features(vds):
 def compute_labels(vds):
   return [vis.metadata.vistype for vis in vds]
   
-
+def setupLog():
+  ts = time.time()
+  st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S.txt')
+  logdir = 'log'
+  if not os.path.exists(logdir):
+    os.makedirs(logdir)
+  logging.basicConfig(filename=os.path.join(logdir, st), level=logging.INFO)
+  logging.info("3..2..1...VRRRRROOMMMM")
 
 def run(fname):
+  setupLog()
   visDataObjects = load_data(fname)
   features = compute_features(visDataObjects)
   labels = compute_labels(visDataObjects)
@@ -49,7 +60,6 @@ def run(fname):
     print modelKlass
     print score
     print "\n"
-
 
 
 
