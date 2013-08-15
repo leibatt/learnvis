@@ -6,6 +6,8 @@ from datasets.vis.vis_obj import Vis
 from datasets.vis.vis_metadata import VisMetadata
 from base import BaseExtractor,default_delim, default_quote
 
+DEBUG=False
+
 class MappingExtractor(BaseExtractor):
   '''
   Set of extraction functions for producing Vis objects from raw data files
@@ -49,7 +51,7 @@ class MappingExtractor(BaseExtractor):
     mapper_data,hh = self.loadCSVRows(filename,delim=delim,quotechar=quotechar)
     vis_map = []
     for row in mapper_data:
-      # print "row:",row
+      # if DEBUG: print "row:",row
       source = row.pop(0) # index 0
       url = row.pop(0) # index 1
       location = row.pop(0) # index 2
@@ -70,15 +72,15 @@ class MappingExtractor(BaseExtractor):
       column_names = raw_data[0]
       numcols = len(column_names)
       raw_data = raw_data[1:] # remove column names from data
-      #print "raw_data:",raw_data
+      #if DEBUG: print "raw_data:",raw_data
       dt = []
       for i,f in enumerate(column_names):
         dt.append('S'+msl)
-      #print "dt:",dt,",format:",(','.join(dt))
+      #if DEBUG: print "dt:",dt,",format:",(','.join(dt))
       data = np.array(raw_data,dtype=','.join(dt)) # create structured array of strings
       data.dtype.names = tuple(column_names)
-      #print "data:",data
-      #print "source:",source,", url:",url,",location:",location,",label:",label
+      #if DEBUG: print "data:",data
+      #if DEBUG: print "source:",source,", url:",url,",location:",location,",label:",label
       # only vis aesthetics info is left
       indexes = {'g':[],'p':[],'s':[],'c':[]}
       column_names = []
@@ -86,7 +88,7 @@ class MappingExtractor(BaseExtractor):
         base = i * 3
         indexes[row[base]].append(int(row[base+1]))
         column_names.append(row[base+2])
-      #print indexes
+      #if DEBUG: print indexes
 
       #build vis object
       vis = Vis(data=data)
@@ -108,5 +110,5 @@ class MappingExtractor(BaseExtractor):
 
       yield vis
 
-    print "successfuly loaded %d files" % (len(vis_map))
+    if DEBUG: print "successfuly loaded %d files" % (len(vis_map))
 

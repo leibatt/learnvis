@@ -16,17 +16,17 @@ class ExhibitExtractor(BaseExtractor):
     BaseExtractor.__init__(self)
     self.typesSeen = {}
 
-  def extract(self, filepattern):
+  def extract(self, ops):
     """
     Extracts exhibit visualizations for the provided filepattern.
-
-    TODO: Should this be returning them instead of yielding them?
 
     Args:
       filepattern: file pattern for glob of files
     Yields:
       Vis objects.
     """
+    filepattern = ops['filepattern']
+
     for i in glob.glob(filepattern):
       f = open(i)
       transport = TTransport.TFileObjectTransport(f)

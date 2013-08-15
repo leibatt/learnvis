@@ -2,6 +2,8 @@ import csv
 from csv import Sniffer
 import numpy as np
 
+DEBUG=False
+
 default_delim = '\t'
 default_quote = '"'
 default_colname = 'f'
@@ -62,8 +64,8 @@ class BaseExtractor():
           for row in filereader: # just take whatever's in the row
             data.append(rowtype(row))
     except Exception as e:
-      print "something bad happened. aborting load of file '%s'" % (filename)
-      print e
+      if DEBUG: print "something bad happened. aborting load of file '%s'" % (filename)
+      if DEBUG: print e
       pass
     return data,hh
 
@@ -124,7 +126,7 @@ class BaseExtractor():
     for i in range(len(maxvals)):
       dt.append('S'+str(maxvals[i]))
     dt.append('') # trailing ',' required for data with only 1 column
-    #print "dt:",dt,",format:",(','.join(dt))
+    #if DEBUG: print "dt:",dt,",format:",(','.join(dt))
     # create structured array of strings
     data = np.array(csv_data,dtype=','.join(dt))
 
