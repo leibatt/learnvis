@@ -1,3 +1,17 @@
+# 8/15/2013
+
+DoneDid
+
+* Ted: added logging to the project.  Harness is currently not reading visdata objects.
+* Eugene: composed data request emails to hadley, jeff.  Ted copy/pasted to GVis/manyeyes folks
+* Leilani: added manyeyes+socrata scrapers to repo
+
+TODOS
+
+* Ted: get harness running to predict maps and word clouds
+* Eugene: do nothing.  my job here is done
+* Leilani: add to socrata scraper to extract more vis spec structure
+
 # 7/23/2013
 
 To Dos:

@@ -1,14 +1,100 @@
-Hi,
-We are building a machine learning model to predict how to best visualize a given data set, using previously drawn visualizations available on the web. We are having some trouble finding data sets we can use to train our model, and want to pick your brain for possible sources for training data.
+Hey Jeff,
 
-We originally tried scraping Many Eyes, since it provides both the visualizations and underlying data used to draw the visualizations. Our hope was to scrape Many Eyes for metadata on the visualizations, such as what data columns correspond to axes and whatnot, and to use this metadata to extract features from the underlying dataset. However, we could not scrape from ManyEyes what data columns were actually used in the visualization (as axes, coloring, etc.), or what transformations occurred prior to drawing the visualization (groupings/aggregates, etc.). In addition, the data sets were often messy and/or unstructured, making feature extraction difficult.
+Thanks for hosting me last week!  
+
+Leilani, Ted (Karger's student) and I are trying to see how far we
+can push machine learning models in predicting visualizations
+properties beyond existing rule based approaches.  The problem is roughly
+-- given a training set of data tables and their corresponding
+visualization specifications, learn a model such that for a new
+data table the model can make "sane recommendations".  It's currently
+not clear if recommendation will be
+
+1) high level visualization type, 
+2) aesthetic mappings, 
+3) transformations (e.g., change to log axes) given the current visualization,
+4) something else.  
+
+This depends on the types of training data we can get our hands on --
+we've already scraped manyeyes, exhibit visualizations, and socrata data.
+
+Do you have access or could introduce us to people that may have
+access to other clean datasets and their corresponding visualization specs?
+
+Eugene, Leilani and Ted.
+
+---------------
+
+Hi Hadley,
+
+Really excited for your visit next month!  
+
+I wanted to ask you for help before you got here.  Leilani, Ted
+(Karger's student) and I are trying to see how far we can push
+machine learning models in predicting visualizations properties
+beyond existing rule based approaches.  The problem is roughly --
+given a training set of data tables and their corresponding
+visualization specifications, learn a model such that for a new
+data table the model can make "sane recommendations".  It's currently
+not clear if recommendation will be:
+
+1) high level visualization type e.g., scatterplot/bar chart
+2) aesthetic mappings and marks, 
+3) transformations (e.g., change to log axes) given the current visualization,
+4) something else.  
+
+This depends on the types of training data we can get our hands on
+-- we've already scraped manyeyes, exhibit visualizations, and
+socrata data which provide the input data and x/y/color aesthetic
+mappings.
+
+Do you have access or could introduce us to people that have corpuses
+of ggplot2 visualizations and the underlying datasets?
+
+Eugene, Leilani and Ted.
+
+-----------
+
+
+Hi!
+
+
+
+We are building a machine learning model to predict how to best
+visualize a given data set, using previously drawn visualizations
+available on the web. We are having some trouble finding data sets
+we can use to train our model, and want to pick your brain for
+possible sources for training data.
+
+We originally tried scraping Many Eyes, since it provides both the
+visualizations and underlying data used to draw the visualizations.
+Our hope was to scrape Many Eyes for metadata on the visualizations,
+such as what data columns correspond to axes and whatnot, and to
+use this metadata to extract features from the underlying dataset.
+However, we could not scrape from ManyEyes what data columns were
+actually used in the visualization (as axes, coloring, etc.), or
+what transformations occurred prior to drawing the visualization
+(groupings/aggregates, etc.). In addition, the data sets were often
+messy and/or unstructured, making feature extraction difficult.
 
 We are looking for a corpus that would provide us with the following:
 
 --access to the underlying dataset used to produce the visualization, preferably in tabular form (i.e. rows and columns)
+
 --access to the visualization itself
+
 --access to the mapping/specification used to draw the visualization
 
 "Visualization itself" means an image file or webpage we can go to to look at the visualization. "Mapping/specification" means the description used to map columns in the data to properties of the visualization. We need to be able to extract from the mapping/spec what columns were used for the axes, what columns were used for color, what transformations were done beforehand, etc.
 
 If any datasets come to mind please let us know.
+
+
+
+Goals
+clean dataset and the visual mappings/visualization type at least
+
+Hadley - ggplot data
+Google - fusion tables
+Jeff   - 
+Ben Shneiderman
