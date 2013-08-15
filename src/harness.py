@@ -5,8 +5,10 @@ from feature_extractor import extract_features
 
 
 def load_data(fname):
+  #exops = {"filename": fname}
+  #vd = VisDataset(ManyEyesExtractor, exops)
   exops = {"filename": fname}
-  vd = VisDataset(ManyEyesExtractor, exops)
+  vd = VisDataset(MappingExtractor, exops)
   return vd.getVisualizations()
 
 
@@ -60,8 +62,8 @@ if __name__ == '__main__':
   sys.path.append(os.path.normpath(os.path.join(datasets_dir, '..', '..')))
   from datasets import ManyEyesExtractor,VisDataset,Vis,VisMetadata
 
-  #run("../data/data_sets/many_eyes/mapping.txt")
-  run("../data/manyeyes_test")
+  run("../data/data_sets/many_eyes/mapping.txt")
+  #run("../data/manyeyes_test")
 
 
 else:
