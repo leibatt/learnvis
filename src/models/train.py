@@ -2,7 +2,7 @@ import random
 from model import Model
 from fscore import MulticlassFscore
 from data import *
-
+import logging
 
 class ModelTrainer:
   """
@@ -15,6 +15,7 @@ class ModelTrainer:
     if not isinstance(models, list):
       self.models = [self.models]
     self.seed = 0
+    self.logger = logging.getLogger("ModelTrainer")
 
   def create_folds(self, dataset, K=10, shuffle=False):
     """
@@ -61,16 +62,19 @@ class ModelTrainer:
     else:
       folds = [ (dataset.get_points(), []) ]
 
+    self.logger.info("Model %s | Starting Folds: %d, shuffle=%s" % (modelKlass, K, str(shuffle)))
     for i, (training, validation) in enumerate(folds):
+      self.logger.info("Fold %d | Model %s | Starting Train/Test" % (i, modelKlass))
       model = modelKlass()
       model.train(training)
       thisFscore = model.evaluate(validation)
-      if not thisFscore: continue
-      print "%s: Fold %d performance: %s" % (modelKlass, i, repr(thisFscore))
+      if not thisFscore:
+        self.logger.warn("Fold %d | Model %s | Ending Train/Test | FScore missing!" % (i, modelKlass))
+        continue
+      self.logger.info("Fold %d | Model %s | Ending Train/Test | FScore %s" % (i, modelKlass, repr(thisFscore)))
       fscore.ingest(thisFscore)
-    print "%s: Overall performance: %s" % (modelKlass, repr(fscore))
+    self.logger.info("Model %s | Ending Folds | Aggregate performance: %s" % (modelKlass, repr(fscore))) 
     return fscore
-
 
 
 if __name__ == '__main__':

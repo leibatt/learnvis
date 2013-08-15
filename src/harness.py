@@ -46,10 +46,10 @@ def setupLog():
   if not os.path.exists(logdir):
     os.makedirs(logdir)
   logging.basicConfig(filename=os.path.join(logdir, st), level=logging.INFO)
-  logging.info("3..2..1...VRRRRROOMMMM")
 
 def run(fname):
   setupLog()
+  logging.info("Running filename: %s" % fname)
   visDataObjects = load_data(fname)
   features = compute_features(visDataObjects)
   labels = compute_labels(visDataObjects)
@@ -61,9 +61,6 @@ def run(fname):
     print score
     print "\n"
 
-
-
-
 # get the path to the datasets package
 if __name__ == '__main__':
   import os, sys
@@ -74,7 +71,6 @@ if __name__ == '__main__':
 
   run("../data/data_sets/many_eyes/mapping.txt")
   #run("../data/manyeyes_test")
-
 
 else:
   from .. import ManyEyesExtractor,VisDataset,Vis,VisMetadata
