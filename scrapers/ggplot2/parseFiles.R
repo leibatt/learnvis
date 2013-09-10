@@ -8,6 +8,13 @@
 source("plot2json.R")
 library(RJSONIO)
 
+# Iteratively runs each line in codeblock
+# If a line fails, it's prepended to the next line.  This
+# covers the case where a statement is broken across multiple lines:
+#
+#     ggplot() +
+#     geom_point()
+#
 procCodeblock = function(codeblock, datafolder, specfolder) {
   allspecs = vector()
   lines = strsplit(codeblock, '\n')[[1]]
@@ -21,6 +28,8 @@ procCodeblock = function(codeblock, datafolder, specfolder) {
         if (any(class(resp) == "ggplot")) {
           buffer = ""
           json = plotToJSON(resp)
+
+          # Now write the spec & data out
           json$spec = setFileMD(json$spec, json$data, datafolder, specfolder)
 
           if (!file.exists(json$spec$datafile)) {
@@ -34,6 +43,9 @@ procCodeblock = function(codeblock, datafolder, specfolder) {
     }
   }
 }
+
+
+
 
 datafolder = "./datas/"
 specfolder = "./specs/"

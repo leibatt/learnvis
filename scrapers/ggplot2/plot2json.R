@@ -17,7 +17,8 @@ plotToJSON = function(p) {
   base_names = names(base_mapping)
   print(p$mapping)
 
-  # layers
+  # Layers
+  # extracts geom, stat, and aes mapping for each layer
   f = function(layer) {
     geom_name = layer$geom$objname
     stat_name = layer$stat$objname
