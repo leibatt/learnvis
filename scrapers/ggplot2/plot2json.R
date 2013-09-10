@@ -11,8 +11,7 @@ library(RJSONIO)
 library(ggplot2)
 library(digest)
 
-plotToJSON = function(p, datafolder, specfolder) {
-
+plotToJSON = function(p) {
   # base aesthetic mappings
   base_mapping = p$mapping
   base_names = names(base_mapping)
@@ -29,21 +28,37 @@ plotToJSON = function(p, datafolder, specfolder) {
   plot$layers = lapply(p$layers, f)
   plot$mapping = p$mapping
 
-  md5 = digest(p$data)
-  datafilename = sprintf("%s/%s.csv", datafolder, md5)
-  specfilename = sprintf("%s/%s.json", specfolder, md5)
-
-  # write if './FILEROOT/md5.csv' doesn't exist
-  if (!file.exists(datafilename)) {
-    write.csv(p$data, file=datafilename)
-  }
-
-  write(toJSON(plot), specfilename)
+  return(list(spec=plot, data=p$data))
 }
+
+setFileMD = function(spec, data, datafolder, specfolder) {
+  # compute IDs for the data and spec files
+  md5 = digest(data)
+  specid = sprintf("%s-%s", md5, digest(spec))
+  datafilename = sprintf("%s/%s.csv", datafolder, md5)
+  specfilename = sprintf("%s/%s.json", specfolder, specid)
+
+  spec$datamd5 = md5
+  spec$datafile = datafilename
+  spec$specfile = specfilename
+  return(spec)
+}
+
+
+writeSpec = function(spec, data) {
+  if (!file.exists(spec$datafile)) {
+    write.csv(data, file=spec$datafile)
+  }
+  write(toJSON(spec), file=spec$specfile)
+  return(spec)
+}
+
 
 
 p = ggplot(data=head(diamonds,n=100), aes(carat, price)) 
 p = p + geom_line() + geom_point(aes(color=cut)) 
 p = p + facet_grid(.~color)
 
-plotToJSON(p, "/tmp", "/tmp")
+ret = plotToJSON(p)
+ret$spec = setFileMD(ret$spec, ret$data, "/tmp", "/tmp")
+writeSpec(ret$spec, ret$data)

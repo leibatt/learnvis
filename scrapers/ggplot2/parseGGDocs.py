@@ -37,9 +37,12 @@ def parse(fname):
 
 
 
+if __name__ == "__main__":
+  import sys
+  import json
 
-if __name__ == "__file__":
   if len(sys.argv) <= 1:
+    print "Prints to stdout a json file of {file name: CODESTRING}"
     print "python parseGGDocs.py <ggplot R files directory>"
     exit(0)
 
@@ -47,10 +50,12 @@ if __name__ == "__file__":
 
   codes = {}
   for fname in os.listdir(directory):
+    print >>sys.stderr, fname
     if fname.lower().endswith('r'):
+      print >>sys.stderr, "parsing %s" % fname
       lines = parse('%s/%s' % (directory,fname))
       code = "\n".join(lines)
       if 'ggplot' in code or 'qplot' in code:
         codes[fname] = code
 
-  print json.dumps(codes)
+  print >>sys.stdout,  json.dumps(codes)
