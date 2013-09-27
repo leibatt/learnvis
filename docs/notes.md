@@ -1,3 +1,9 @@
+# 9/27/2013
+
+Made a google doc to track stuff
+
+http://infolab.stanford.edu/~widom/paper-writing.html#intro
+
 # 8/15/2013
 
 DoneDid
