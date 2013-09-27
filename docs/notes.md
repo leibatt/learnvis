@@ -1,8 +1,18 @@
 # 9/27/2013
 
-Made a google doc to track stuff
+Immediate Tasks
+* Ted: Fix harness to output sane numbers
+* Eugene: write importer for R dataset
+* Leilani: pick deadlines for things
+  * SIGMOD?
+  * WWW?
+  * UIST
+* Leilani: write skeleton/outline for our future paper
+  * try to write the introduction
+  * doesn’t need to be polished, bullets are okay
+  * scope out space we are addressing
+    * narrow down the problem space we are addressing to a few sentences
 
-https://docs.google.com/document/d/1mHiqOj_jSEcBihXjoP2W2pwTylcwvuvneD0Z_SbLdKY/edit?usp=sharing
 
 # 8/15/2013
 
