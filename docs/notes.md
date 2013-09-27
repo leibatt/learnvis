@@ -2,7 +2,7 @@
 
 Made a google doc to track stuff
 
-http://infolab.stanford.edu/~widom/paper-writing.html#intro
+https://docs.google.com/document/d/1mHiqOj_jSEcBihXjoP2W2pwTylcwvuvneD0Z_SbLdKY/edit?usp=sharing
 
 # 8/15/2013
 
