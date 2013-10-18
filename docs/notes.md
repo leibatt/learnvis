@@ -1,16 +1,59 @@
 # 10/18/2013
 
-Adytia: 
+Progress:
 
-* do we work on the join problem (pick pair of columns and vis type together) or separately
-* pick best pair of columns, then best vis type ofr those columns
+* Ted: Added config file, logging, and configurable dataset loader, added CHI template
+* Aditya: gained a better sense for whats going on in the code
+* Eugene: updated get_data script to include ggplot stuff, started ggplot extractor
+* Leilani: Made headway on the introduction, and wrote bulleted outline for intro/paper in general
+* Overall: discussed variation of the problem to trade off cost of feature extraction and quality
 
-Conversation
+Immediate Tasks
 
-* if we pick 2 columns, that does'nt mean the other n choose 2 - 1 pairs are negative examples
+* Ted:
+  * Continue to fix harness
+  * make a lat/long classifier
+* Eugene:
+  * write importer for R dataset
+* Leilani:
+  * make intro/outline available
+  * finish intro
+  * talk to Mike about venue
+  * find a way to scrape additional metadata from many eyes
+  * Add features to the harness and measure their performance (optional)
+* Aditya:
+  * search for literature for classification tradeoffs with respect to performance/runtime
 
+Ideas for how the model will work
 
+* main classifier:
+  * start with a brute-force approach
+  * for each table:
+    * enumerate all possible pairs of colums
+      * enumerate all possible chart types
+        * how good is this pair of axes and chart type together?
+* optional (do this later)
+  * one to learn for a given visualization type, what columns make the best axes
+* We could make implicit negatives (i.e. the choices the user did not pick)
+  * we have a lot of negatives and not as many positives
+    * could subsample the negatives
+    * could re-weight error objective
+      * weight false-negatives more harshly than false-positives
+* would be cool to measure cost vs effectiveness of various features
+  * want to see the tradeoff between time to compute and usefulness/effectiveness in the model
+  * w/ respect to time budget and desired accuracy, how useful are these features?
+  * search for literature for classification tradeoffs with respect to performance/runtime
+  * ML current work assumes the features are given
 
+Example problem:
+
+* preprocess training data into some data structure that measures feature quality and extraction cost (somehow)
+* user with a new dataset wants best visualization(s) within a time bound
+  * system uses pre-processed data to pick best set of features to use as inputs to an already trained model
+  * many ways to pick best set of features 
+    * one shot
+    * a decision tree whose nodes tell us what is the next feature(s) to extract
+    * add features one by one, or group by group
 
 # 9/27/2013
 

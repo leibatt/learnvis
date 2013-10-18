@@ -1,6 +1,7 @@
 import random
 from models import *
 from datasets import *
+from operator import itemgetter
 from feature_extractor import extract_features
 import time
 import logging
@@ -22,13 +23,21 @@ class Harness:
     self.log.info("3..2..1...VRRRRROOMMMM")
     visDataObjects = self.load_data()
     features, labels = self.compute_features_and_labels(visDataObjects)
-
     # If these aren't the same, there is no point in continuing.
     assert(len(labels) == len(features))
-
+    self.dump_points(features, labels)
     self.log.info("- %d data points loaded.", len(features))
 
-    self.dump_points(features, labels)
+    experiment_type = self.config.get(self.section, 'experiment')
+    log.info("Running Model \"%s\"", experiment_type)
+    if experiment_type == 'model0':
+      self._model0(visDataObjects, features, labels)
+    if experiment_type == 'model1':
+      self._model1(visDataObjects, features, labels)
+    else:
+      log.fatal("Unknown experiment type: %s", experiment_type)
+
+  def _model0(self, visDataObjects, features, labels):
     modelData = ModelData(features, labels)
     trainer = ModelTrainer(Model)
   
@@ -38,14 +47,34 @@ class Harness:
       self.log.info(score)
       self.log.info("\n")
 
+  def _model1(self, visDataObjects, features, labels):
+    """Ted's round one.
+
+    Find max margin in:
+      for t in vis_types:
+        for x in columns:
+          yield margin(x_axis | t, x)
+
+    Repeat for y.
+
+    Then we basis so (independently) pick the best axis assignment for a chart
+    type.
+    """
+    pass
+
   def dump_points(self, features, labels):
-    self.log.info("Dumping Points")
+    self.log.info("Read Data")
     self.log.info("===========================")
-    for f, l in itertools.izip(features, labels):
-      self.log.info(l)
-      self.log.info("----------")
-      self.log.info(f)
-      self.log.info("\n\n")
+    labelCount = {}
+    for label in labels:
+      if label not in labelCount:
+        labelCount[label] = 1
+      else:
+        labelCount[label] += 1
+    thelist = sorted([(k,v) for k,v in labelCount.iteritems()], key=itemgetter(1))
+
+    for tup in thelist:
+      self.log.info("%d %s", tup[1], tup[0])
 
   def load_data(self):
     dataset_name = self.config.get(self.section, 'dataset')
@@ -80,17 +109,21 @@ class Harness:
     labels = []
     cum_duration = 0
     dataset_name = self.config.get(self.section, 'dataset')
+    max_points = int(self.config.get(self.section, 'maxpoints', 0))
+
     for vis in vds:
-      if i % 100 == 0:
+      if (i % 100 == 0) or (i >=  max_points):
         stop = time.time()
         duration = stop - start
         start = time.time()
         cum_duration += duration
         self.log.info("Loaded %d visualizations from Dataset \"%s\" in %ds (total: %ds)", i, dataset_name, duration, cum_duration)
+      if i >= max_points:
+        self.log.info("Stopping mode because reached configured maximum %d points", max_points)
+        break
       features.append(self.features_for(vis))
       labels.append(self.label_for(vis))
       i += 1
-
     return features,labels
 
   def features_for(self, vis):
