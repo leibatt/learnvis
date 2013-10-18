@@ -156,6 +156,30 @@ class Harness:
       logging.info("Using config: %s" % name)
       return config
   
+<<<<<<< HEAD
+def setupLog():
+  ts = time.time()
+  st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S.txt')
+  logdir = 'log'
+  if not os.path.exists(logdir):
+    os.makedirs(logdir)
+  logging.basicConfig(filename=os.path.join(logdir, st), level=logging.INFO)
+
+def run(fname):
+  setupLog()
+  logging.info("Running filename: %s" % fname)
+  visDataObjects = load_data(fname)
+  features = compute_features(visDataObjects)
+  labels = compute_labels(visDataObjects)
+  modelData = ModelData(features, labels)
+  trainer = ModelTrainer(Model)
+  for modelKlass, score in trainer.train_and_test(modelData):
+    print "\n"
+    print modelKlass
+    print score
+    print "\n"
+=======
+>>>>>>> c0da18e9452a8b04880e4921b40b6eb1bf47e9de
 
 # get the path to the datasets package
 if __name__ == '__main__':
@@ -174,6 +198,12 @@ if __name__ == '__main__':
   #run("../data/data_sets/many_eyes/mapping.txt")
   #run("../data/manyeyes_test")
 
+<<<<<<< HEAD
+else:
+  from .. import ManyEyesExtractor,VisDataset,Vis,VisMetadata
+
+=======
 #else:
 #  from .. import ManyEyesExtractor,VisDataset,Vis,VisMetadata
+>>>>>>> c0da18e9452a8b04880e4921b40b6eb1bf47e9de
 

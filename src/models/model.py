@@ -2,9 +2,8 @@ import numpy as np
 from sklearn import svm
 from sklearn.feature_extraction import DictVectorizer
 from itertools import izip
-
+import logging
 from fscore import MulticlassFscore
-
 
 class Model:
   """
@@ -23,6 +22,7 @@ class Model:
       self.classifier = classifier
 
     self.filterFn = filterFn
+    self.logger = logging.getLogger("Model")
 
   def train(self, visualizations):
     """
@@ -31,12 +31,17 @@ class Model:
     Returns: 
       Nothing. Mutates the state of this model instance.
     """
-    if not visualizations: return 
+    if not visualizations:
+      self.logger.error("Trying to train on empty set of visualizations")
+      return 
     x_train = []
     y_train = []
+    i = 0
     for vis in visualizations:
       x_train.append(vis.get_features())
       y_train.append(vis.get_label())
+      i += 1
+    self.logger.info("Trained on %i visualizations" % i)
 
     x_train = np.asarray(x_train)
     y_train = np.asarray(y_train)
@@ -71,6 +76,8 @@ class Model:
 
     predicted = self.predict(visualizations)
     mcf = MulticlassFscore()
+    print "FOO "
+    print mcf
 
     xs = np.asarray(xs)
     ys = np.asarray(ys)

@@ -3,7 +3,10 @@ from model import Model
 from fscore import MulticlassFscore
 from data import *
 import logging
+<<<<<<< HEAD
+=======
 
+>>>>>>> c0da18e9452a8b04880e4921b40b6eb1bf47e9de
 
 class ModelTrainer:
   """
@@ -16,7 +19,11 @@ class ModelTrainer:
     if not isinstance(models, list):
       self.models = [self.models]
     self.seed = 0
+<<<<<<< HEAD
+    self.logger = logging.getLogger("ModelTrainer")
+=======
     self.log = logging.getLogger(__name__)
+>>>>>>> c0da18e9452a8b04880e4921b40b6eb1bf47e9de
 
   def create_folds(self, dataset, K=10, shuffle=False):
     """
@@ -63,16 +70,26 @@ class ModelTrainer:
     else:
       folds = [ (dataset.get_points(), []) ]
 
+    self.logger.info("Model %s | Starting Folds: %d, shuffle=%s" % (modelKlass, K, str(shuffle)))
     for i, (training, validation) in enumerate(folds):
+      self.logger.info("Fold %d | Model %s | Starting Train/Test" % (i, modelKlass))
       model = modelKlass()
       model.train(training)
       thisFscore = model.evaluate(validation)
+<<<<<<< HEAD
+      if not thisFscore:
+        self.logger.warn("Fold %d | Model %s | Ending Train/Test | FScore missing!" % (i, modelKlass))
+        continue
+      self.logger.info("Fold %d | Model %s | Ending Train/Test | FScore %s" % (i, modelKlass, repr(thisFscore)))
+      fscore.ingest(thisFscore)
+    self.logger.info("Model %s | Ending Folds | Aggregate performance: %s" % (modelKlass, repr(fscore))) 
+=======
       if not thisFscore: continue
       self.log("%s: Fold %d performance: %s", modelKlass, i, repr(thisFscore))
       fscore.ingest(thisFscore)
     self.log("%s: Overall performance: %s", modelKlass, repr(fscore))
+>>>>>>> c0da18e9452a8b04880e4921b40b6eb1bf47e9de
     return fscore
-
 
 
 if __name__ == '__main__':
