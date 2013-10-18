@@ -1,3 +1,46 @@
+# 10/18/2013
+
+Progress:
+* Ted: Added config file, logging, and configurable dataset loader, added CHI template
+* Aditya: gained a better sense for whats going on in the code
+* Eugene: ?
+* Leilani: Made headway on the introduction, and wrote bulleted outline for intro/paper in general
+
+Immediate Tasks
+* Ted:
+  * Continue to fix harness
+  * make a lat/long classifier
+* Eugene:
+  * write importer for R dataset
+* Leilani:
+  * make intro/outline available
+  * finish intro
+  * talk to Mike about venue
+  * find a way to scrape additional metadata from many eyes
+  * Add features to the harness and measure their performance (optional)
+* Aditya:
+  * search for literature for classification tradeoffs with respect to performance/runtime
+
+Ideas for how the model will work
+* main classifier:
+  * start with a brute-force approach
+  * for each table:
+    * enumerate all possible pairs of colums
+      * enumerate all possible chart types
+        * how good is this pair of axes and chart type together?
+* optional (do this later)
+  * one to learn for a given visualization type, what columns make the best axes
+* We could make implicit negatives (i.e. the choices the user did not pick)
+  * we have a lot of negatives and not as many positives
+    * could subsample the negatives
+    * could re-weight error objective
+      * weight false-negatives more harshly than false-positives
+* would be cool to measure cost vs effectiveness of various features
+  * want to see the tradeoff between time to compute and usefulness/effectiveness in the model
+  * w/ respect to time budget and desired accuracy, how useful are these features?
+  * search for literature for classification tradeoffs with respect to performance/runtime
+  * ML current work assumes the features are given
+
 # 9/27/2013
 
 Immediate Tasks
