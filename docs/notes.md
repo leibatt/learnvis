@@ -19,7 +19,7 @@ Immediate Tasks
   * find a way to scrape additional metadata from many eyes
   * Add features to the harness and measure their performance (optional)
 * Aditya:
-  * 
+  * search for literature for classification tradeoffs with respect to performance/runtime
 
 Ideas for how the model will work
 * main classifier:
@@ -35,6 +35,11 @@ Ideas for how the model will work
     * could subsample the negatives
     * could re-weight error objective
       * weight false-negatives more harshly than false-positives
+* would be cool to measure cost vs effectiveness of various features
+  * want to see the tradeoff between time to compute and usefulness/effectiveness in the model
+  * w/ respect to time budget and desired accuracy, how useful are these features?
+  * search for literature for classification tradeoffs with respect to performance/runtime
+  * ML current work assumes the features are given
 
 # 9/27/2013
 
