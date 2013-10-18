@@ -90,6 +90,7 @@ class Harness:
         cum_duration += duration
         self.log.info("Loaded %d visualizations from Dataset \"%s\" in %ds (total: %ds)", i, dataset_name, duration, cum_duration)
       if i >= max_points:
+        self.log.info("Stopping mode because reached configured maximum %d points", maxpoints)
         break
       features.append(self.features_for(vis))
       labels.append(self.label_for(vis))
