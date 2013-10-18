@@ -1,6 +1,21 @@
+# 10/18/2013
+
+Adytia: 
+
+* do we work on the join problem (pick pair of columns and vis type together) or separately
+* pick best pair of columns, then best vis type ofr those columns
+
+Conversation
+
+* if we pick 2 columns, that does'nt mean the other n choose 2 - 1 pairs are negative examples
+
+
+
+
 # 9/27/2013
 
 Immediate Tasks
+
 * Ted: Fix harness to output sane numbers
 * Eugene: write importer for R dataset
 * Leilani: pick deadlines for things
