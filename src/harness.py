@@ -23,13 +23,21 @@ class Harness:
     self.log.info("3..2..1...VRRRRROOMMMM")
     visDataObjects = self.load_data()
     features, labels = self.compute_features_and_labels(visDataObjects)
-
     # If these aren't the same, there is no point in continuing.
     assert(len(labels) == len(features))
-
+    self.dump_points(features, labels)
     self.log.info("- %d data points loaded.", len(features))
 
-    self.dump_points(features, labels)
+    experiment_type = self.config.get(self.section, 'experiment')
+    log.info("Running Model \"%s\"", experiment_type)
+    if experiment_type == 'model0':
+      self._model0(visDataObjects, features, labels)
+    if experiment_type == 'model1':
+      self._model1(visDataObjects, features, labels)
+    else:
+      log.fatal("Unknown experiment type: %s", experiment_type)
+
+  def _model0(self, visDataObjects, features, labels):
     modelData = ModelData(features, labels)
     trainer = ModelTrainer(Model)
   
@@ -38,6 +46,21 @@ class Harness:
       self.log.info(modelKlass)
       self.log.info(score)
       self.log.info("\n")
+
+  def _model1(self, visDataObjects, features, labels):
+    """Ted's round one.
+
+    Find max margin in:
+      for t in vis_types:
+        for x in columns:
+          yield margin(x_axis | t, x)
+
+    Repeat for y.
+
+    Then we basis so (independently) pick the best axis assignment for a chart
+    type.
+    """
+    pass
 
   def dump_points(self, features, labels):
     self.log.info("Read Data")
