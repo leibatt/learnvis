@@ -1,3 +1,33 @@
+# 9/27/2013
+
+Immediate Tasks
+* Ted: Fix harness to output sane numbers
+* Eugene: write importer for R dataset
+* Leilani: pick deadlines for things
+  * SIGMOD?
+  * WWW?
+  * UIST
+* Leilani: write skeleton/outline for our future paper
+  * try to write the introduction
+  * doesn’t need to be polished, bullets are okay
+  * scope out space we are addressing
+    * narrow down the problem space we are addressing to a few sentences
+
+
+# 8/15/2013
+
+DoneDid
+
+* Ted: added logging to the project.  Harness is currently not reading visdata objects.
+* Eugene: composed data request emails to hadley, jeff.  Ted copy/pasted to GVis/manyeyes folks
+* Leilani: added manyeyes+socrata scrapers to repo
+
+TODOS
+
+* Ted: get harness running to predict maps and word clouds
+* Eugene: do nothing.  my job here is done
+* Leilani: add to socrata scraper to extract more vis spec structure
+
 # 7/23/2013
 
 To Dos:

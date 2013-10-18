@@ -1,3 +1,6 @@
+import logging
+log = logging.getLogger("FScore")
+
 class Fscore:
   def __init__(self):
     self.tp = 0.0
@@ -47,7 +50,7 @@ class MulticlassFscore:
 
   def registerResult(self, gold, predicted):
     if self.finalized:
-      print "Can't register result, already finalized!"
+      log.error("Can't register result, already finalized!")
     else:
       self.ensureLabel(gold)
       self.ensureLabel(predicted)
