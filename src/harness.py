@@ -1,6 +1,7 @@
 import random
 from models import *
 from datasets import *
+from operator import itemgetter
 from feature_extractor import extract_features
 import time
 import logging
@@ -39,13 +40,18 @@ class Harness:
       self.log.info("\n")
 
   def dump_points(self, features, labels):
-    self.log.info("Dumping Points")
+    self.log.info("Read Data")
     self.log.info("===========================")
-    for f, l in itertools.izip(features, labels):
-      self.log.info(l)
-      self.log.info("----------")
-      self.log.info(f)
-      self.log.info("\n\n")
+    labelCount = {}
+    for label in labels:
+      if label not in labelCount:
+        labelCount[label] = 1
+      else:
+        labelCount[label] += 1
+    thelist = sorted([(k,v) for k,v in labelCount.iteritems()], key=itemgetter(1))
+
+    for tup in thelist:
+      self.log.info("%d %s", tup[1], tup[0])
 
   def load_data(self):
     dataset_name = self.config.get(self.section, 'dataset')
