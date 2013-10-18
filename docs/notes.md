@@ -3,7 +3,7 @@
 Progress:
 * Ted: Added config file, logging, and configurable dataset loader, added CHI template
 * Aditya: gained a better sense for whats going on in the code
-* Eugene:
+* Eugene: ?
 * Leilani: Made headway on the introduction, and wrote bulleted outline for intro/paper in general
 
 Immediate Tasks
