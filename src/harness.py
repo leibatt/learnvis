@@ -103,7 +103,7 @@ class Harness:
       rootLogger.addHandler(console)
     else:
       console = rootLogger.handlers[0]
-    console.setLevel(logging.INFO)
+    rootLogger.setLevel(logging.INFO)
     console.setFormatter(formatter)
 
     # Add a hdnaler for the filesystem
@@ -115,7 +115,6 @@ class Harness:
       os.makedirs(logdir)
     self.logfile = os.path.abspath(os.path.join(logdir, st))
     fileHandler = logging.FileHandler(self.logfile, 'w')
-    fileHandler.setLevel(logging.DEBUG)
     fileHandler.setFormatter(formatter)
     rootLogger.addHandler(fileHandler)
 
