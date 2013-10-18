@@ -8,7 +8,7 @@ import datetime
 import os, sys
 import ConfigParser
 import itertools
-
+import time
 
 class Harness:
   def __init__(self, configSection):
@@ -48,13 +48,25 @@ class Harness:
       self.log.info("\n\n")
 
   def load_data(self):
-    dataset = self.config.get(self.section, 'mapping')
+    dataset_name = self.config.get(self.section, 'dataset')
     thisPath = os.path.abspath(os.path.dirname(__file__))
-    mappingPath = os.path.join(thisPath, '..', 'data', 'data_sets', dataset)
-    self.log.info("Using mapping: %s", mappingPath)
-    exops = {"filename": mappingPath}
-    vd = VisDataset(MappingExtractor, exops)
-    return vd.getVisualizations()
+    if dataset_name == 'OldManyEyes':
+      dataset = 'many_eyes/mapping.txt'
+      mappingPath = os.path.join(thisPath, '..', 'data', 'data_sets', dataset)
+      self.log.info("Using mapping: %s", mappingPath)
+  
+      exops = {"filename": mappingPath}
+      vd = VisDataset(MappingExtractor, exops)
+      return vd.getVisualizations()
+    elif dataset_name == "ManyEyes":
+      from datasets.extractors import ManyEyesExtractor
+      ex = ManyEyesExtractor()
+      mappingPath = os.path.join(thisPath, '..', 'data', 'manyeyes_crawler')
+      opts = {'filename': mappingPath}
+      vd = ex.extract(opts)
+      return vd
+    else:
+      raise Exception("Unknown dataset")
   
   def compute_features_and_labels(self, vds):
     """Compute features and label for a vis data set.
@@ -62,11 +74,23 @@ class Harness:
     We do both at the same time to avoid reading in the set twice.
 
     """
+    i = 0
+    start = time.time()
     features = []
     labels = []
+    cum_duration = 0
+    dataset_name = self.config.get(self.section, 'dataset')
     for vis in vds:
+      if i % 100 == 0:
+        stop = time.time()
+        duration = stop - start
+        start = time.time()
+        cum_duration += duration
+        self.log.info("Loaded %d visualizations from Dataset \"%s\" in %ds (total: %ds)", i, dataset_name, duration, cum_duration)
       features.append(self.features_for(vis))
       labels.append(self.label_for(vis))
+      i += 1
+
     return features,labels
 
   def features_for(self, vis):
