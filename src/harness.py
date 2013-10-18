@@ -7,43 +7,77 @@ import logging
 import datetime
 import os, sys
 import ConfigParser
+import itertools
+
 
 class Harness:
   def __init__(self, configSection):
     self.section = configSection # The config section we're running.
     self.config = self.loadConfig(configSection)
     self.setupLog()
+    self.log = logging.getLogger(__name__)
+    self.log.propagate = True
 
   def run(self):
+    self.log.info("3..2..1...VRRRRROOMMMM")
     visDataObjects = self.load_data()
-    features = self.compute_features(visDataObjects)
-    labels = self.compute_labels(visDataObjects)
+    features, labels = self.compute_features_and_labels(visDataObjects)
+
+    # If these aren't the same, there is no point in continuing.
+    assert(len(labels) == len(features))
+
+    self.log.info("- %d data points loaded.", len(features))
+
+    self.dump_points(features, labels)
     modelData = ModelData(features, labels)
     trainer = ModelTrainer(Model)
   
     for modelKlass, score in trainer.train_and_test(modelData):
-      print "\n"
-      print modelKlass
-      print score
-      print "\n"
+      self.log.info("\n")
+      self.log.info(modelKlass)
+      self.log.info(score)
+      self.log.info("\n")
+
+  def dump_points(self, features, labels):
+    self.log.info("Dumping Points")
+    self.log.info("===========================")
+    for f, l in itertools.izip(features, labels):
+      self.log.info(l)
+      self.log.info("----------")
+      self.log.info(f)
+      self.log.info("\n\n")
 
   def load_data(self):
     dataset = self.config.get(self.section, 'mapping')
     thisPath = os.path.abspath(os.path.dirname(__file__))
     mappingPath = os.path.join(thisPath, '..', 'data', 'data_sets', dataset)
-    print "Using mapping: %s" % mappingPath
+    self.log.info("Using mapping: %s", mappingPath)
     exops = {"filename": mappingPath}
     vd = VisDataset(MappingExtractor, exops)
     return vd.getVisualizations()
   
-  def compute_vis_features(self, vis):
+  def compute_features_and_labels(self, vds):
+    """Compute features and label for a vis data set.
+
+    We do both at the same time to avoid reading in the set twice.
+
+    """
+    features = []
+    labels = []
+    for vis in vds:
+      features.append(self.features_for(vis))
+      labels.append(self.label_for(vis))
+    return features,labels
+
+  def features_for(self, vis):
+    # TODO: Depend on config for features computed.
     data = vis.data
     md = vis.metadata
   
     def axis_features(idx):
       axisname = data.dtype.names[idx]
       col = data[axisname]
-      return extract_features(None, col)
+      return extract_features(None, col, self.config, self.section)
   
     features = {}
     if len(md.axes) >= 2:
@@ -53,21 +87,39 @@ class Harness:
       # add y axis features
       features.update(axis_features(md.axes[1]))
     return features
-  
-  def compute_features(self, vds):
-    return map(self.compute_vis_features, vds)
-  
-  def compute_labels(self, vds):
-    return [vis.metadata.vistype for vis in vds]
-    
+ 
+  def label_for(self, vis):
+    # TODO: Depend on config for label computed.
+    return vis.metadata.vistype
+
   def setupLog(self):
+
+    formatter = logging.Formatter('%(asctime)s %(name)-10s %(levelname)-8s %(message)s')
+    rootLogger = logging.getLogger('')
+
+    # Add a handler for the screen
+    if not rootLogger.handlers:
+      console = logging.StreamHandler()
+      rootLogger.addHandler(console)
+    else:
+      console = rootLogger.handlers[0]
+    console.setLevel(logging.INFO)
+    console.setFormatter(formatter)
+
+    # Add a hdnaler for the filesystem
     ts = time.time()
     st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d_%H-%M-%S.txt')
-    logdir = 'log'
+    thisPath = os.path.abspath(os.path.dirname(__file__))
+    logdir = os.path.join(thisPath, '..', 'log')
     if not os.path.exists(logdir):
       os.makedirs(logdir)
-    logging.basicConfig(filename=os.path.join(logdir, st), level=logging.INFO)
-    logging.info("3..2..1...VRRRRROOMMMM")
+    self.logfile = os.path.abspath(os.path.join(logdir, st))
+    fileHandler = logging.FileHandler(self.logfile, 'w')
+    fileHandler.setLevel(logging.DEBUG)
+    fileHandler.setFormatter(formatter)
+    rootLogger.addHandler(fileHandler)
+
+    rootLogger.info("Logging to %s", self.logfile)
   
   def loadConfig(self, name):
     thisPath = os.path.abspath(os.path.dirname(__file__))
@@ -75,10 +127,10 @@ class Harness:
     config = ConfigParser.ConfigParser()
     config.read(configFile)
     if name not in config.sections():
-      print "Error: config %s not found." % name
+      logging.error("Error: config %s not found." % name)
       return None
     else:
-      print "Using config: %s" % name
+      logging.info("Using config: %s" % name)
       return config
   
 

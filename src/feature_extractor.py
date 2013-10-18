@@ -20,7 +20,7 @@ def list_klasses(filter_func):
       yield klass
 
 
-def extract_features(filter_func, table):
+def extract_features(filter_func, table, options, section):
   """
   Args
     filter_func: function to filter feature objects
@@ -35,9 +35,7 @@ def extract_features(filter_func, table):
       if val is not None:
         ret["%s__%s" % (name, key)] = val
 
-  print ret 
   return ret
 
 if __name__ == "__main__":
-
   print extract_features(None, [0,1,2,3])
