@@ -80,17 +80,20 @@ class Harness:
     labels = []
     cum_duration = 0
     dataset_name = self.config.get(self.section, 'dataset')
+    max_points = int(self.config.get(self.section, 'maxpoints', 0))
+
     for vis in vds:
-      if i % 100 == 0:
+      if (i % 100 == 0) or (i >=  max_points):
         stop = time.time()
         duration = stop - start
         start = time.time()
         cum_duration += duration
         self.log.info("Loaded %d visualizations from Dataset \"%s\" in %ds (total: %ds)", i, dataset_name, duration, cum_duration)
+      if i >= max_points:
+        break
       features.append(self.features_for(vis))
       labels.append(self.label_for(vis))
       i += 1
-
     return features,labels
 
   def features_for(self, vis):
