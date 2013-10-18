@@ -40,3 +40,9 @@ nosetests.xml
 .pydevproject
 
 log
+
+*.bbl
+*.aux
+*.blg
+*.log
+*.out

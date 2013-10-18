@@ -1,5 +1,4 @@
 from ..base import BaseFeature
-from sets import Set
 import numpy as np
 
 class ColumnStats(BaseFeature):
@@ -8,7 +7,7 @@ class ColumnStats(BaseFeature):
     BaseFeature.__init__(self, "column stats", "numeric")
   
   def process(self, data):
-    numdistinct = len(Set(data))
+    numdistinct = len(set(data))
     
     return {
       'StdDev': self.standardDev(data),

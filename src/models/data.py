@@ -4,6 +4,8 @@ the feature extraction into the right format to ingest into the models
 """
 from itertools import izip
 from sklearn.feature_extraction import DictVectorizer
+import logging
+log = logging.getLogger("ModalData")
 
 class ModelPoint:
   def __init__(self, data, train):
@@ -53,7 +55,7 @@ class ModelData:
 
   def get_points(self):
     points = []
-    print self.npdata
+    log.info(self.npdata)
     for (data, train) in izip(self.npdata, self.train):
       points.append(ModelPoint(data, train))
     return points
