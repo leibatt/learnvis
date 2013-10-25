@@ -1,5 +1,8 @@
 from ..base import BaseFeature
 import numpy as np
+import logging
+
+log = logging.getLogger("ColumnStats")
 
 class ColumnStats(BaseFeature):
 
@@ -7,6 +10,7 @@ class ColumnStats(BaseFeature):
     BaseFeature.__init__(self, "column stats", "numeric")
   
   def process(self, data):
+    log.info(data)
     numdistinct = len(set(data))
     
     return {

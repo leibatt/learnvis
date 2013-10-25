@@ -40,9 +40,6 @@ class Harness:
 
   def _model0(self, visDataObjects, features, labels):
     log.info("Model 0 Called")
-    log.info(visDataObjects)
-    log.info(features)
-    log.info(labels)
     modelData = ModelData(features, labels)
     trainer = ModelTrainer(Model)
   
@@ -65,7 +62,9 @@ class Harness:
     Then we basis so (independently) pick the best axis assignment for a chart
     type.
     """
-    pass
+    log.info("Model 1 Called")
+    modelData = ModelData(features, labels)
+    trainer = ModelTrainer(Model)
 
   def dump_points(self, features, labels):
     self.log.info("Read Data")
