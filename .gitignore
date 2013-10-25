@@ -46,3 +46,5 @@ log
 *.blg
 *.log
 *.out
+
+docs/paper/main.pdf

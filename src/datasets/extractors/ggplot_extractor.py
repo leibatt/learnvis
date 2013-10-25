@@ -82,7 +82,10 @@ class GGPlotExtractor(BaseExtractor):
       if data is None: 
         continue
 
+      fields = map(str, data.dtype.names)
       axes = [lmap.get('x', None), lmap.get('y', None)]
+      axes = filter(bool, axes)
+      axes = map(fields.index, axes)
       scaling = None
       color = None
       url = None
@@ -119,7 +122,7 @@ class GGPlotExtractor(BaseExtractor):
         o2row = lambda o: [o.get(field, None) for field in fields]
 
         rows = map(o2row, reader)
-        dtypes = np.dtype([(field, np.str_) for field in fields])
+        dtypes = np.dtype([(field, str) for field in fields])
         data = np.array(rows, dtype=dtypes)
     except Exception as e:
       print e
