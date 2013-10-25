@@ -82,10 +82,15 @@ class GGPlotExtractor(BaseExtractor):
       if data is None: 
         continue
 
-      fields = map(str, data.dtype.names)
-      axes = [lmap.get('x', None), lmap.get('y', None)]
-      axes = filter(bool, axes)
-      axes = map(fields.index, axes)
+      try:
+        fields = map(str, data.dtype.names)
+        axes = [lmap.get('x', None), lmap.get('y', None)]
+        axes = filter(bool, axes)
+        axes = map(fields.index, axes)
+      except Exception as e:
+        print e
+        continue
+
       scaling = None
       color = None
       url = None
