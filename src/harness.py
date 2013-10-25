@@ -22,6 +22,7 @@ class Harness:
   def run(self):
     self.log.info("3..2..1...VRRRRROOMMMM")
     visDataObjects = self.load_data()
+    print visDataObjects
     features, labels = self.compute_features_and_labels(visDataObjects)
     # If these aren't the same, there is no point in continuing.
     assert(len(labels) == len(features))
@@ -94,8 +95,15 @@ class Harness:
       opts = {'filename': mappingPath}
       vd = ex.extract(opts)
       return vd
+    elif dataset_name == 'ggplot2':
+      from datasets.extractors import GGPlotExtractor
+      ex = GGPlotExtractor()
+      mappingPath = os.path.join(thisPath, '..', 'data', 'data_sets', 'ggplot2/specs/*')
+      opts = {'filepattern': mappingPath}
+      vd = ex.extract(opts)
     else:
       raise Exception("Unknown dataset")
+    return vd
   
   def compute_features_and_labels(self, vds):
     """Compute features and label for a vis data set.
