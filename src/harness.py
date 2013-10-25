@@ -141,6 +141,7 @@ class Harness:
   
     def axis_features(idx):
       axisname = data.dtype.names[idx]
+      print data
       col = data[axisname]
       return extract_features(None, col, self.config, self.section)
   
