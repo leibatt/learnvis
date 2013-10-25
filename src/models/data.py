@@ -43,6 +43,7 @@ class ModelData:
 
   def munge(self):
     dv = DictVectorizer()
+    log.warning(self.data)
     ft = dv.fit_transform(self.data)
     return ft.toarray()
     self.keys = self.feature_keys()

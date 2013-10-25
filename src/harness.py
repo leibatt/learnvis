@@ -38,6 +38,10 @@ class Harness:
       log.fatal("Unknown experiment type: %s", experiment_type)
 
   def _model0(self, visDataObjects, features, labels):
+    log.info("Model 0 Called")
+    log.info(visDataObjects)
+    log.info(features)
+    log.info(labels)
     modelData = ModelData(features, labels)
     trainer = ModelTrainer(Model)
   
