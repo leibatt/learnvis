@@ -127,9 +127,11 @@ class GGPlotExtractor(BaseExtractor):
         o2row = lambda o: [o.get(field, None) for field in fields]
 
         rows = map(o2row, reader)
+        rows = map(tuple,rows)
         maxchars = max([max(map(len, row)) for row in rows])
         dtypes = np.dtype([(field, np.str_, maxchars) for field in fields])
-        rows = zip(*rows)
+        # transposes table to be lists of columns instead of lists of rows
+        #rows = zip(*rows)
         data = np.array(rows, dtype=dtypes)
     except Exception as e:
       print e
