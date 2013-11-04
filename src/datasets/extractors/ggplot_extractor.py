@@ -87,6 +87,8 @@ class GGPlotExtractor(BaseExtractor):
         axes = [lmap.get('x', None), lmap.get('y', None)]
         axes = filter(bool, axes)
         axes = map(fields.index, axes)
+        if len(axes) == 0: # no axes defined!
+          continue
       except Exception as e:
         print "error while loading %s" % e
         continue
