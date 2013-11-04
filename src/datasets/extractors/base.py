@@ -128,6 +128,9 @@ class BaseExtractor():
     dt.append('') # trailing ',' required for data with only 1 column
     #if DEBUG: print "dt:",dt,",format:",(','.join(dt))
     # create structured array of strings
+    for i,row in enumerate(csv_data):
+      csv_data[i] = tuple(row) # convert to tuples
+    #print "csv data:",csv_data
     data = np.array(csv_data,dtype=','.join(dt))
 
     # add the proper column names for the data, if possible
