@@ -4,7 +4,7 @@ INT_MAX = 99999999
 
 class BaseFeature:
   """
-  Extract one
+  Extract one feature
   """
 
   def __init__(self, name="", kind="numeric", buckets=None):

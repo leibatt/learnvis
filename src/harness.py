@@ -41,6 +41,39 @@ class Harness:
       self.log.info(score)
       self.log.info("\n")
 
+  def _model1(self, visDataObjects, features, labels):
+    """Ted's round one.
+
+    Find max margin in:
+      for t in vis_types:
+        for x in columns:
+          yield margin(x_axis | t, x)
+
+    Repeat for y.
+
+    Then we basis so (independently) pick the best axis assignment for a chart
+    type.
+    """
+    from sklearn.multiclass import OutputCodeClassifier
+    from sklearn.svm import LinearSVC
+    clf = OutputCodeClassifier(LinearSVC(random_state=0),
+      code_size=2, random_state=0)
+    pass
+
+  def dump_points(self, features, labels):
+    self.log.info("Read Data")
+    self.log.info("===========================")
+    labelCount = {}
+    for label in labels:
+      if label not in labelCount:
+        labelCount[label] = 1
+      else:
+        labelCount[label] += 1
+    thelist = sorted([(k,v) for k,v in labelCount.iteritems()], key=itemgetter(1))
+
+    for tup in thelist:
+      self.log.info("%d %s", tup[1], tup[0])
+
   def load_data(self):
     dataset_name = self.config.get(self.section, 'dataset')
     thisPath = os.path.abspath(os.path.dirname(__file__))

@@ -88,7 +88,7 @@ class GGPlotExtractor(BaseExtractor):
         axes = filter(bool, axes)
         axes = map(fields.index, axes)
       except Exception as e:
-        print e
+        print "error while loading %s" % e
         continue
 
       scaling = None
